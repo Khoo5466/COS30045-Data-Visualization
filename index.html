@@ -6,22 +6,58 @@
         <meta name="keywords" content="HTML, CSS, JavaScript"/>
         <meta name="author"	content="Khoo Chun Pin & Tan Shan Yan"/>
 
-        <title></title>
         <link rel="stylesheet" href="index.css">
+        
+        <script src="http://d3js.org/d3.v4.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+
+        <title></title>
+        
     </head>
     <body>
-        <h1>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: A Focus on Food Supply and Consumption</h1>
+        <header>
+            <nav>
+                <a href="index.html">Home</a>
+            </nav>
+        </header>
 
-        <div id="image1">
-            <img src="global food supply and consumption.webp" alt="">
-            <div class="centered-text">Center Text Here</div>
+        <h1>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: A Focus on Food Supply and Consumption</h1>
+        <div id="chart-container">
+            <div id="chart1">
+                <!-- Country filter positioned within chart area -->
+                <div id="country-filter-container">
+                    <label for="countryFilter"><strong>Countries:</strong></label>
+                    <select id="countryFilter" ></select>
+                </div>
+                <div id="year-filter-container">
+                    <label for="yearFilter" id="yearFilter-label"><strong>Years:</strong></label>
+                    <select id="yearFilter" ></select>
+                </div>
+                <script src="visualization/chart1.js"></script>
+            </div>
+
+            <article>
+                <strong>Article:</strong><br>
+                Hello, this is a sample article content that will be displayed beside the chart. You can add more information or descriptions here.
+            </article>
+        </div>
+        <div>
+            <p id="chart2"></p>
+        </div>
+        <div>
+            <p id="chart3"></p>
+        </div>
+        <div>
+            <p id="chart4"></p>
         </div>
 
 
 
 
         <footer style="color: grey;">
-            <p>&copy; 2024 Data Visualization Project Website by Khoo Chun Pin & Tan Shan Yan</p>
+            <hr><br><p>&copy; 2024 Data Visualization Project Website by Khoo Chun Pin & Tan Shan Yan</p>
         </footer>
     </body>
 </html>

@@ -6,45 +6,108 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    text-align: center;
-    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Light background for a clean look */
+    color: #333; /* Dark text for readability */
+    text-align: left; /* Align text to the left */
+    padding-top: 70px; /* Space for the fixed navbar */
 }
 
-/* Style for the h1 */
+/* Navigation styles */
+nav {
+    position: fixed; /* Fixes the navbar at the top */
+    top: 0; /* Position it at the very top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    background-color: #4caf50; /* Green background for freshness */
+    padding: 15px; /* Add padding inside the nav */
+    margin: 0; /* Remove any margin */
+    z-index: 1000; /* Ensure the nav stays above other content */
+}
+
+nav a {
+    color: white; /* White text for contrast */
+    text-decoration: none; /* Remove underline */
+    margin: 0 15px; /* Space between links */
+    font-weight: bold; /* Bold text for emphasis */
+    transition: color 0.3s; /* Smooth transition for hover */
+}
+
+nav a:hover {
+    color: #ffeb3b; /* Yellow color on hover for visibility */
+}
+
+/* Header styles */
 h1 {
     font-size: 2.5em;
-    text-align: center;
-    color: #2c3e50;
+    color: #4caf50; /* Match header color with nav for consistency */
     margin-bottom: 20px;
 }
 
-/* Responsive image */
-#image1 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+/* Position chart container and adjust dimensions */
+#chart-container {
+    position: relative;
+    display: flex;
+    width: 800px; /* Keep this width to accommodate the chart */
+    margin-left: 0; /* Align chart container to the left */
+    padding-top: 10px;
 }
 
-/* Centered text styling */
-.centered-text {
+/* Position chart */
+#chart1 {
+    flex: 1; /* Allow chart to take available space */
+    margin-right: 20px; /* Space between chart and article */
+}
+
+/* Position country dropdown in top-left corner of chart */
+#country-filter-container {
     position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 2em;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    pointer-events: none; /* Ensures the text doesn't block interaction with the image */
+    top: 30px;
+    left: 10px;
+    z-index: 10;
+    padding: 5px;
+    border-radius: 5px;
 }
 
-/* Footer styling */
+#year-filter-container {
+    position: absolute;
+    top: 40px;
+    right: 150px; /* Adjusted position for clarity */
+    z-index: 10;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Style for dropdown selects */
+select {
+    width: 110px;  /* Set dropdown width */
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* Article styles */
+article {
+    flex: 0 0 450px; /* Fixed width of 300px for the article */
+    height: 350px; /* Height can adjust based on content */
+    text-align: left;
+    padding: 15px; /* Uniform padding for better spacing */
+    margin: 0 0 0 -250px; /* Margin: top, right, bottom, left; reduced left margin to shift it left */
+    background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    overflow: auto; /* Allow for scrolling if content exceeds the box */
+}
+
+
+/* Footer styles */
 footer {
+    text-align: center;
     margin-top: 30px;
     font-size: 0.9em;
-    color: grey;
+    color: #777; /* Lighter color for footer text */
+    padding: 20px 0;
+    border-top: 1px solid #ddd; /* Light border for separation */
 }
