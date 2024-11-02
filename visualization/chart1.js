@@ -13,7 +13,7 @@ function init() {
     var allData;
 
     // Load data
-    d3.csv("Calculate of Food Supply with Country in Year.csv").then(function(data) {
+    d3.csv("csv/Calculate of Food Supply with Country in Year.csv").then(function(data) {
         allData = data; // Save all data for filtering
 
         // Populate country and year filters
