@@ -35,7 +35,8 @@ function init() {
                 .text(country);
         });
 
-        const yearFilter = d3.select("#yearFilter");
+        const yearFilter = d3.select("#yearFilter");    
+
         years.forEach(year => {
             yearFilter.append("option")
                 .attr("value", year)
@@ -49,11 +50,16 @@ function init() {
     // Function to update chart based on selected filters
     function updateFilters() {
         const selectedCountry = d3.select("#countryFilter").property("value");
-        const selectedYear = d3.select("#yearFilter").property("value");
+
+        // Get selected years (returns an array)
+        const selectedYears = Array.from(
+            d3.select("#yearFilter").property("selectedOptions"),
+            option => option.value
+        );
 
         const filteredData = allData.filter(d =>
             (selectedCountry === "All Selected" || d.Reference_area === selectedCountry) &&
-            (selectedYear === "All Selected" || d.TIME_PERIOD === selectedYear)
+            (selectedYears.includes("All Selected") || selectedYears.includes(d.TIME_PERIOD))
         );
 
         updateChart(filteredData);
@@ -63,12 +69,13 @@ function init() {
     function updateChart(data) {
         // Group data by supply type, then by year
         const aggregatedData = data.reduce((acc, d) => {
+            const country = d.Reference_area;
             const supply = d.Measure;
             const year = d.TIME_PERIOD;
             const calories = +d.Calories;
 
             if (!acc[supply]) acc[supply] = {};
-            if (!acc[supply][year]) acc[supply][year] = { supply, year, calories: 0 };
+            if (!acc[supply][year]) acc[supply][year] = { supply, year, calories: 0, country };
 
             acc[supply][year].calories += calories;
             return acc;
@@ -90,16 +97,32 @@ function init() {
             svg.selectAll("*").remove(); // Clear previous content
         }
 
+        // Create tooltip
+        const tooltip = d3.select("body")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("position", "absolute")
+                        .style("padding", "6px")
+                        .style("background-color", "rgba(0, 0, 0, 0.7)")
+                        .style("color", "#fff")
+                        .style("border-radius", "4px")
+                        .style("pointer-events", "none")
+                        .style("display", "none");
+
         // Chart title
         const selectedCountry = d3.select("#countryFilter").property("value");
-        const selectedYear = d3.select("#yearFilter").property("value");
+        const selectedYears = Array.from(
+            d3.select("#yearFilter").property("selectedOptions"),
+            option => option.value
+        ).join(", ");
+
         svg.append("text")
             .attr("x", svgWidth - 650)
             .attr("y", padding - 60)
             .attr("text-anchor", "middle")
             .attr("font-size", "16px")
             .attr("font-weight", "bold")
-            .text(`Food Supply and Consumption in ${selectedCountry}, Year: ${selectedYear}`);
+            .text(`Food Supply in Country: ${selectedCountry}, Year: ${selectedYears}`);
 
         // Draw grouped bars
         const barWidth = xScale.bandwidth() / colorScale.domain().length; // Width of each bar segment
@@ -113,7 +136,26 @@ function init() {
             .attr("y", d => yScale(d.calories))
             .attr("width", barWidth)
             .attr("height", d => chartHeight - padding - yScale(d.calories))
-            .attr("fill", d => colorScale(d.year));
+            .attr("fill", d => colorScale(d.year))
+            .on("mouseover", function(event, d) {
+                // Check if the selected country is "All Selected"
+                const selectedCountry = d3.select("#countryFilter").property("value");
+                const displayCountry = selectedCountry === "All Selected" ? "All Selected" : d.country;
+                // Show tooltip on mouseover
+                tooltip
+                    .style("display", "block")
+                    .html(`Country: ${displayCountry}<br>Measure: ${d.supply}<br>Year: ${d.year}<br>Calories: ${d.calories}`);
+            })
+            .on("mousemove", function(event) {
+                // Update tooltip position with mouse
+                tooltip
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function() {
+                // Hide tooltip on mouseout
+                tooltip.style("display", "none");
+            });
 
         // Add x-axis with title
         var xAxis = d3.axisBottom(xScale);
