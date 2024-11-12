@@ -49,64 +49,175 @@ h1 {
     font-size: 2.5em;
     color: #4caf50; /* Match header color with nav for consistency */
     margin-bottom: 20px;
+    text-align: center;
 }
 
-/* Position chart container and adjust dimensions */
-#chart-container {
-    position: relative;
+/* Layout for chart1 and chart2 */
+#chart1-container, #chart2-container {
     display: flex;
-    width: 800px; /* Keep this width to accommodate the chart */
-    margin-left: 0; /* Align chart container to the left */
-    padding-top: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 20px;
 }
 
-/* Position chart */
+/* Adjusted positioning of filters */
+#chart1-country-filter-container, #chart1-year-filter-container,
+#chart2-country-filter-container, #chart2-year-slider-container {
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+/* Chart and Article for Chart1 */
 #chart1 {
-    flex: 1; /* Allow chart to take available space */
-    margin-right: 20px; /* Space between chart and article */
+    width: 50%;
+    height: 400px;
 }
 
-/* Position country dropdown in top-left corner of chart */
-#country-filter-container {
-    position: absolute;
-    top: 30px;
-    left: 10px;
-    z-index: 10;
-    padding: 5px;
-    border-radius: 5px;
+/* Position chart1 container (flex layout to align items) */
+#chart1-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-#year-filter-container {
-    position: absolute;
-    top: 40px;
-    right: 150px; /* Adjusted position for clarity */
-    z-index: 10;
-    padding: 5px;
-    border-radius: 5px;
+#chart1-country-filter-container {
+    top: 215px;
+    left: 20px;
+}
+
+#chart1-year-filter-container {
+    top: 215px;
+    left: 500px; /* Adjust position */
 }
 
 /* Style for dropdown selects */
 select {
-    width: 110px;  /* Set dropdown width */
+    width: 120px;  /* Set dropdown width */
     padding: 5px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-top: 5px;
 }
 
-/* Article styles */
-article {
-    flex: 0 0 450px; /* Fixed width of 300px for the article */
-    height: 350px; /* Height can adjust based on content */
+/* Chart1 article */
+#chart1-article {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    height: 350px;
+    overflow: auto;
+    flex: 0 0 450px; /* Fixed width for article */
     text-align: left;
-    padding: 15px; /* Uniform padding for better spacing */
-    margin: 0 0 0 -250px; /* Margin: top, right, bottom, left; reduced left margin to shift it left */
-    background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-    overflow: auto; /* Allow for scrolling if content exceeds the box */
+    margin-left: 50px;
 }
+
+#chart2 {
+    width: 50%;
+    height: 400px;
+    
+}
+
+/* Chart2 container (flex layout for chart and article) */
+#chart2-container {
+    display: flex;
+    flex-direction: row; /* Place chart2 and article side by side */
+    gap: 20px; /* Space between chart and article */
+    align-items: flex-start; /* Align them to the top */
+    justify-content: flex-start; /* Align the container to the left */
+    margin-top: 20px; /* Optional, for better spacing */
+    margin-left: 120px;
+}
+
+#chart2-country-filter-container, #chart2-year-slider-container {
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+#chart2-country-filter-container {
+    top: 630px;
+    left: 550px;
+}
+
+#chart2-year-slider-container {
+    top: 970px;
+    left: 650px;
+}
+
+.slider-container {
+    position: relative;
+    width: 300px;
+    top: 400px;
+    left: 150px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 30%;
+}
+
+.range-slider {
+    position: relative;
+    width: 100%;
+}
+
+.range-slider input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2.5px;
+    background: transparent;
+    outline: none;
+    position: absolute;
+    top: 0;
+
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb,
+.range-slider input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid white;
+    
+}
+
+.range-track {
+    position: absolute;
+    height: 5px;
+    background-color: #ddd;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.range-selected {
+    position: absolute;
+    height: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Article for Chart2 */
+#chart2-article {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    height: 350px;
+    overflow: auto;
+    flex: 0 0 450px; /* Fixed width for article */
+    text-align: left;
+    margin-left: -50px;
+}
+
+
 
 .tooltip {
     position: absolute;

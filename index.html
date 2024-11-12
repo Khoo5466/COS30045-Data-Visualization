@@ -20,46 +20,80 @@
         <header>
             <nav>
                 <a href="index.html">Home</a>
+                <a href="worldmap.html">maps</a>
                 <a href="#chart1">Chart1</a>
+                <a href="#chart2">Chart2</a>
             </nav>
         </header>
 
         <h1>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: A Focus on Food Supply and Consumption</h1>
         
-        <div>
-            <div id="worldmap">
-                <script src="visualization/worldmap.js"></script>
-            </div>
-        </div>
         
-        <div id="chart-container">
-            <div id="chart1">
-                <!-- Country filter positioned within chart area -->
-                <div id="country-filter-container">
-                    <label for="countryFilter"><strong>Countries:</strong></label>
-                    <select id="countryFilter" ></select>
-                </div>
-                <div id="year-filter-container">
-                    <label for="yearFilter" id="yearFilter-label"><strong>Years:</strong></label>
-                    <select id="yearFilter" ></select>
-                </div>
-                <script src="visualization/chart1.js"></script>
+        <div class="chart-container">
+            <div id="maps-container">
+                <div id="worldmap1"></div>
+                <div id="worldmap2"></div>
             </div>
+            <!-- End of maps-container -->
 
-            <article>
-                <strong>Article:</strong><br>
-                Hello, this is a sample article content that will be displayed beside the chart. You can add more information or descriptions here.
-            </article>
+            <div id="chart1-container">
+                <div id="chart1">
+                    <div id="chart1-country-filter-container">
+                        <label for="chart1-countryFilter"><strong>Countries:</strong></label>
+                        <select id="chart1-countryFilter" ></select>
+                    </div>
+                    <div id="chart1-year-filter-container">
+                        <label for="chart1-yearFilter" id="yearFilter-label"><strong>Years:</strong></label>
+                        <select id="chart1-yearFilter" ></select>
+                    </div>
+                </div>
+    
+                <article id="chart1-article">
+                    <strong>Article:</strong><br>
+                    Hello, this is a sample article content that will be displayed beside the chart. You can add more information or descriptions here.
+                </article>
+            </div>
+            <!-- End of chart1-container -->
+
+            <div id="chart2-container">
+                <article id="chart2-article">
+                    <strong>Article:</strong><br>
+                    This article provides insights on daily protein supply trends from plant and animal sources.
+                </article>
+                <div id="chart2">
+                    <div id="chart2-country-filter-container">
+                        <label for="chart2-countryFilter"><strong>Countries:</strong></label>
+                        <select id="chart2-countryFilter" ></select>
+                    </div>
+                    <div id="chart2-year-slider-container" class="slider-container">
+                        <span id="yearBegin"></span>
+                        <div class="range-slider">
+                            <div class="range-track"></div>
+                            <div class="range-selected" id="selected-range"></div>
+                            <input type="range" id="chart2-minyearSlider" min="1961" max="2021" step="1" value="1961" />
+                            <input type="range" id="chart2-maxyearSlider" min="1961" max="2021" step="1" value="2021" />
+                        </div>
+                        <span id="yearEnd"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- End of chart2-container -->
+
+            <div id="chart3-container">
+                <div id="chart3"></div>
+            </div>
+            <!-- End of chart3-container -->
+            
+            <div id="chart4-container">
+                <div id="chart4"></div>
+            </div>
+            <!-- End of chart4-container -->
+
+            <script src="food_supply&consumption.js"></script>
         </div>
-        <div>
-            <p id="chart2"></p>
-        </div>
-        <div>
-            <p id="chart3"></p>
-        </div>
-        <div>
-            <p id="chart4"></p>
-        </div>
+        <!-- End of chart-container -->
+
+        
 
 
 
