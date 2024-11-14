@@ -1,114 +1,175 @@
-const svg = d3.select("#chart3")
-    .attr("viewBox", "0 0 800 800")
-    .attr("width", 800)
-    .attr("height", 800)
-    .style("display", "block")
-    .style("margin", "auto")
-    .style("background-color", "#lightblue");
+// Tooltip setup using the new .tooltip3 class
+const tooltip = d3.select("body").append("div")
+  .attr("class", "tooltip3")
+  .style("position", "absolute")
+  .style("opacity", 0); // Initial opacity set to 0
 
-const pack = d3.pack()
-    .size([800, 800])
-    .padding(3);
-
-const color = d3.scaleSequential([1, 10], d3.interpolateViridis);
-
-// Tooltip setup
-const tooltip = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("background", "#333")
-    .style("color", "#fff")
-    .style("padding", "5px 10px")
-    .style("border-radius", "5px")
-    .style("pointer-events", "none")
-    .style("font-size", "12px")
-    .style("display", "none");
-
+// Load the CSV file
 d3.csv("csv/child growth and malnutrition.csv").then(data => {
-    // Convert flat CSV data to hierarchical structure
-    const nestedData = Array.from(
-        d3.group(data, d => d["Country Short Name"]),
-        ([country, years]) => ({
-            name: country,
-            children: Array.from(
-                d3.group(years, d => d.Year),
-                ([year, values]) => ({
-                    name: year,
-                    children: values.map(d => ({
-                        name: d["Country Short Name"],
-                        severe_wasting: +d["Severe wasting"],
-                        wasting: +d["Wasting"],
-                        overweight: +d["Overweight"],
-                        stunting: +d["Stunting"],
-                        underweight: +d["Underweight"],
-                        value: +d["Severe wasting"] + +d["Wasting"] + +d["Overweight"] + +d["Stunting"] + +d["Underweight"]
-                    }))
-                })
-            )
-        })
-    );
+  const nestedData = {
+    name: "Health Data",
+    children: []
+  };
 
-    const root = d3.hierarchy({ name: "Root", children: nestedData })
-        .sum(d => d.value)
-        .sort((a, b) => b.value - a.value);
+  // Group data by Country
+  const countries = d3.groups(data, d => d["Country Short Name"]);
+  countries.forEach(([country, countryData]) => {
+    const countryEntry = {
+      name: country,
+      children: []
+    };
 
-    pack(root);
+    // Group data by Year within each Country
+    const years = d3.groups(countryData, d => d["Year"]);
+    years.forEach(([year, yearData]) => {
+      const yearSums = yearData.reduce((acc, curr) => {
+        acc["Severe wasting"] += parseFloat(curr["Severe wasting"]) || 0;
+        acc["Wasting"] += parseFloat(curr["Wasting"]) || 0;
+        acc["Overweight"] += parseFloat(curr["Overweight"]) || 0;
+        acc["Stunting"] += parseFloat(curr["Stunting"]) || 0;
+        acc["Underweight"] += parseFloat(curr["Underweight"]) || 0;
+        return acc;
+      }, { "Severe wasting": 0, "Wasting": 0, "Overweight": 0, "Stunting": 0, "Underweight": 0 });
 
-    const node = svg.selectAll("g")
-        .data(root.descendants())
-        .join("g")
-        .attr("transform", d => `translate(${d.x},${d.y})`)
-        .on("dblclick", (event, d) => zoom(event, d))
-        .on("mouseover", (event, d) => {
-            if (!d.children) {
-                const metrics = `
-                    Severe wasting: ${d.data.severe_wasting}<br>
-                    Wasting: ${d.data.wasting}<br>
-                    Overweight: ${d.data.overweight}<br>
-                    Stunting: ${d.data.stunting}<br>
-                    Underweight: ${d.data.underweight}
-                `;
+      const yearEntry = {
+        name: year,
+        children: [
+          { name: "Severe wasting", value: yearSums["Severe wasting"] },
+          { name: "Wasting", value: yearSums["Wasting"] },
+          { name: "Overweight", value: yearSums["Overweight"] },
+          { name: "Stunting", value: yearSums["Stunting"] },
+          { name: "Underweight", value: yearSums["Underweight"] }
+        ]
+      };
+      countryEntry.children.push(yearEntry);
+    });
 
-                tooltip.style("display", "block")
-                    .html(`<strong>${d.data.name}</strong><br>${metrics}`);
-            }
-        })
-        .on("mousemove", (event) => {
-            tooltip.style("left", (event.pageX + 5) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", () => tooltip.style("display", "none"));
+    nestedData.children.push(countryEntry);
+  });
 
-    node.append("circle")
-        .attr("r", d => d.r)
-        .attr("fill", d => d.children ? color(d.depth) : "#ff6347")
-        .attr("stroke", "#000")
-        .attr("stroke-width", 0.5);
+  const width = 932;
+  const height = width;
+  const color = d3.scaleLinear().domain([0, 5]).range(["#d3d3d3", "#69b3a2"]);
 
-    node.append("text")
-        .attr("dy", "0.3em")
-        .attr("font-size", d => d.r / 5)
-        .text(d => d.children ? "" : d.data.name);
+  // Pack the data
+  const pack = data => d3.pack()
+    .size([width - 2, height - 2])
+    .padding(3)(d3.hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value));
 
-    let focus = root;
+  const root = pack(nestedData);
+  const svg = d3.create("svg")
+    .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)  // Default without zoom
+    .style("display", "block")
+    .style("background", "rgb(173, 216, 230)")
+    .style("cursor", "pointer")
+    .on("click", () => zoom(root));
 
-    function zoom(event, d) {
-        focus = d; // Set focus to the clicked node
-        const transition = svg.transition()
-            .duration(750)
-            .tween("zoom", () => {
-                // Create a zoom interpolation based on the new focus
-                const i = d3.interpolateZoom([focus.x, focus.y, focus.r * 2], [400, 400, 800]);
-                return t => zoomTo(i(t));
-            });
-    }
+  // Apply the initial zoom-out by adjusting the viewBox
+  function zoomTo(v) {
+    const k = width / v[2];
+    view = v;
 
-    function zoomTo(v) {
-        const k = 800 / v[2]; // Scale factor
-        node.attr("transform", d => `translate(${(d.x - v[0]) * k + 400},${(d.y - v[1]) * k + 400})`);
-        node.select("circle").attr("r", d => d.r * k);
-    }
+    const scaleFactor = 0.8;  // Apply zoom-out factor
 
-    svg.on("click", () => zoomTo([root.x, root.y, root.r * 2])); // Reset zoom on background click
+    label.attr("transform", d => `translate(${(d.x - v[0]) * k * scaleFactor},${(d.y - v[1]) * k * scaleFactor})`);
+    node.attr("transform", d => `translate(${(d.x - v[0]) * k * scaleFactor},${(d.y - v[1]) * k * scaleFactor})`);
+    node.attr("r", d => d.r * k * scaleFactor);
+  }
+
+  let focus = root;
+  let view;
+
+  // Create the circles and labels for each node
+  const node = svg.append("g")
+    .selectAll("circle")
+    .data(root.descendants().slice(1)) // Skip the root node
+    .join("circle")
+    .attr("fill", d => d.children ? color(d.depth) : "white")
+    .attr("pointer-events", d => !d.children ? "none" : null)
+    .on("mouseover", function(event, d) {
+      d3.select(this).attr("stroke", "#000");
+      tooltip.transition().duration(200).style("opacity", .9);
+
+      let tooltipText = "";
+      if (d.depth === 1) {
+        // Country level
+        tooltipText = `<strong>Country:</strong> ${d.data.name}`;
+      } else if (d.depth === 2) {
+        // Year level
+        tooltipText = `<strong>Year:</strong> ${d.data.name}<br><strong>Country:</strong> ${d.parent.data.name}`;
+      } else if (d.depth === 3) {
+        // Health indicator level
+        tooltipText = `<strong>Indicator:</strong> ${d.data.name}<br><strong>Value:</strong> ${d.value}<br><strong>Country:</strong> ${d.parent.parent.data.name}<br><strong>Year:</strong> ${d.parent.data.name}`;
+      }
+      tooltip.html(tooltipText)
+             .style("left", (event.pageX + 10) + "px")
+             .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", function() {
+      d3.select(this).attr("stroke", null);
+      tooltip.transition().duration(500).style("opacity", 0);
+    })
+    .on("click", (event, d) => focus !== d && (zoom(d), event.stopPropagation()));
+
+  const label = svg.append("g")
+    .style("font", "12px sans-serif")
+    .attr("pointer-events", "none")
+    .attr("text-anchor", "middle")
+    .selectAll("text")
+    .data(root.descendants())
+    .join("text")
+    .style("fill-opacity", d => d.parent === root ? 1 : 0)
+    .style("display", d => d.parent === root ? "inline" : "none")
+    .text(d => d.depth === 3 ? `${d.data.name}: ${d.value.toFixed(2)}` : d.data.name);  // Label health indicators with sum value
+
+  function zoom(d) {
+    focus = d;
+    const transition = svg.transition()
+      .duration(750)
+      .tween("zoom", d => {
+        const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+        return t => zoomTo(i(t));
+      });
+
+    label
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+      .transition(transition)
+      .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+      .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+      .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+  }
+
+  // Handle mouse scroll zooming inside the viewBox container
+  svg.on("wheel", function(event) {
+    event.preventDefault(); // Prevent default scroll behavior
+
+    const scaleFactor = 1.1; // Adjust the zoom sensitivity
+    const zoomDirection = event.deltaY > 0 ? 1 : -1; // Reverse the zoom direction (scroll up to zoom in)
+
+    // Get mouse position relative to the SVG
+    const [mouseX, mouseY] = d3.pointer(event);
+
+    const zoomScale = zoomDirection > 0 ? scaleFactor : 1 / scaleFactor;
+
+    // Get the current viewBox values
+    const currentViewBox = svg.attr("viewBox").split(" ");
+    const currentX = parseFloat(currentViewBox[0]);
+    const currentY = parseFloat(currentViewBox[1]);
+    const currentWidth = parseFloat(currentViewBox[2]);
+    const currentHeight = parseFloat(currentViewBox[3]);
+
+    const newWidth = currentWidth * zoomScale;
+    const newHeight = currentHeight * zoomScale;
+    const newX = currentX + (currentWidth - newWidth) * (mouseX / currentWidth);
+    const newY = currentY + (currentHeight - newHeight) * (mouseY / currentHeight);
+
+    // Update the viewBox with the new zoomed scale and position
+    svg.attr("viewBox", `${newX} ${newY} ${newWidth} ${newHeight}`);
+  });
+
+  // Apply the initial zoom state
+  zoomTo([root.x, root.y, root.r * 2]);
+
+  // Add SVG to the body
+  document.body.append(svg.node());
 });
