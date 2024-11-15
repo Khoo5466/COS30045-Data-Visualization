@@ -7,8 +7,7 @@
         <meta name="author"	content="Khoo Chun Pin & Tan Shan Yan"/>
 
         <link rel="stylesheet" href="index.css">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
+        
         <script src="http://d3js.org/d3.v4.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
@@ -31,30 +30,36 @@
         <header>
             <nav>
                 <a href="index.html">Home</a>
-                <a href="worldmap.html">maps</a>
-                <a href="index.html#chart1">Chart1</a>
-                <a href="index.html#chart2">Chart2</a>
-                <a href="index.html#chart3">chart3</a>
-                <a href="index.html#chart4">Chart4</a>
             </nav>
         </header>
 
-        <div class="container">
-            <br><br>
-            <h1
-        contenteditable>Impact  of  Unhealthy  Lifestyles  and  Environments  on  Premature  Mortality</h1>
-        <p>A Focus on Food Supply and Consumption</p>
-        </div>
-                
-        <br><br><hr><br>
-
-        <h2>title</h2>
-        <div class="maps-container">
+        <h1>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: A Focus on Food Supply and Consumption</h1>
+        
+        
+        <div id="maps-container">
             <div id="worldmap1"></div>
-            <div id="worldmap2"></div>   
-            <script src="worldmaps.js"></script>
+            <div id="worldmap1-year-slider-container" class="slider-container">
+                <span id="yearBegin">1961</span>
+                <div class="range-slider">
+                    <div class="range-track"></div>
+                    <div class="range-selected" id="selected-range"></div>
+                    <input type="range" id="worldmap1-yearSlider" min="1961" max="2021" step="1" value="2021" />
+                </div>
+                <span id="yearEnd">2021</span>
+            </div>
+        
+            <div id="worldmap2"></div>
+            <div id="worldmap2-year-slider-container" class="slider-container">
+                <span id="yearBegin">1961</span>
+                <div class="range-slider">
+                    <div class="range-track"></div>
+                    <div class="range-selected" id="selected-range"></div>
+                    <input type="range" id="worldmap2-yearSlider" min="1961" max="2021" step="1" value="2021" />
+                </div>
+                <span id="yearEnd">2021</span>
+            </div>
         </div>
-        <p id="p2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit rem illum cum omnis, aspernatur exercitationem? Tempore similique a omnis eligendi, fugit eaque ut! Explicabo ea eum facilis aliquam sequi reiciendis!</p2>
+        <script src="worldmaps.js"></script>
     
         <footer style="color: grey;">
             <hr><br><p>&copy; 2024 Data Visualization Project Website by Khoo Chun Pin & Tan Shan Yan</p>

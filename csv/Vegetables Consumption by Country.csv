@@ -1,4 +1,4 @@
-Entity,Year,Vegetables Consumption Type,Vegetables Consumption Value
+Entity,Year,Vegetables_Consumption_Type,Vegetables_Consumption_Value
 Afghanistan,1961,kilograms per year per capita,37.43507
 Afghanistan,1962,kilograms per year per capita,38.192513
 Afghanistan,1963,kilograms per year per capita,39.6448
@@ -2473,67 +2473,67 @@ Comoros,2018,kilograms per year per capita,24.729618
 Comoros,2019,kilograms per year per capita,24.459906
 Comoros,2020,kilograms per year per capita,49.560123
 Comoros,2021,kilograms per year per capita,44.919888
-Congo,1961,kilograms per year per capita,15.579381
-Congo,1962,kilograms per year per capita,15.083674
-Congo,1963,kilograms per year per capita,15.088386
-Congo,1964,kilograms per year per capita,15.384664
-Congo,1965,kilograms per year per capita,14.664213
-Congo,1966,kilograms per year per capita,14.878305
-Congo,1967,kilograms per year per capita,12.840135
-Congo,1968,kilograms per year per capita,15.5541935
-Congo,1969,kilograms per year per capita,14.033423
-Congo,1970,kilograms per year per capita,14.18148
-Congo,1971,kilograms per year per capita,14.159681
-Congo,1972,kilograms per year per capita,14.875195
-Congo,1973,kilograms per year per capita,14.56243
-Congo,1974,kilograms per year per capita,14.752823
-Congo,1975,kilograms per year per capita,15.311051
-Congo,1976,kilograms per year per capita,16.053598
-Congo,1977,kilograms per year per capita,15.917977
-Congo,1978,kilograms per year per capita,16.540503
-Congo,1979,kilograms per year per capita,16.393873
-Congo,1980,kilograms per year per capita,16.965794
-Congo,1981,kilograms per year per capita,16.249542
-Congo,1982,kilograms per year per capita,17.249891
-Congo,1983,kilograms per year per capita,16.726496
-Congo,1984,kilograms per year per capita,16.71101
-Congo,1985,kilograms per year per capita,16.671795
-Congo,1986,kilograms per year per capita,16.088783
-Congo,1987,kilograms per year per capita,16.008022
-Congo,1988,kilograms per year per capita,16.220663
-Congo,1989,kilograms per year per capita,16.015654
-Congo,1990,kilograms per year per capita,31.627708
-Congo,1991,kilograms per year per capita,33.22287
-Congo,1992,kilograms per year per capita,34.74601
-Congo,1993,kilograms per year per capita,33.569298
-Congo,1994,kilograms per year per capita,32.0333
-Congo,1995,kilograms per year per capita,31.324606
-Congo,1996,kilograms per year per capita,33.904617
-Congo,1997,kilograms per year per capita,35.44637
-Congo,1998,kilograms per year per capita,34.58838
-Congo,1999,kilograms per year per capita,35.862087
-Congo,2000,kilograms per year per capita,41.992077
-Congo,2001,kilograms per year per capita,37.605736
-Congo,2002,kilograms per year per capita,37.442196
-Congo,2003,kilograms per year per capita,38.93607
-Congo,2004,kilograms per year per capita,45.149254
-Congo,2005,kilograms per year per capita,30.376743
-Congo,2006,kilograms per year per capita,32.402264
-Congo,2007,kilograms per year per capita,30.622408
-Congo,2008,kilograms per year per capita,31.655464
-Congo,2009,kilograms per year per capita,33.472824
-Congo,2010,kilograms per year per capita,31.499977
-Congo,2011,kilograms per year per capita,29.409983
-Congo,2012,kilograms per year per capita,30.989998
-Congo,2013,kilograms per year per capita,29.20998
-Congo,2014,kilograms per year per capita,28.449972
-Congo,2015,kilograms per year per capita,32.06
-Congo,2016,kilograms per year per capita,29.289944
-Congo,2017,kilograms per year per capita,28.739962
-Congo,2018,kilograms per year per capita,28.759995
-Congo,2019,kilograms per year per capita,26.79997
-Congo,2020,kilograms per year per capita,17.24996
-Congo,2021,kilograms per year per capita,15.12999
+Republic of the Congo,1961,kilograms per year per capita,15.579381
+Republic of the Congo,1962,kilograms per year per capita,15.083674
+Republic of the Congo,1963,kilograms per year per capita,15.088386
+Republic of the Congo,1964,kilograms per year per capita,15.384664
+Republic of the Congo,1965,kilograms per year per capita,14.664213
+Republic of the Congo,1966,kilograms per year per capita,14.878305
+Republic of the Congo,1967,kilograms per year per capita,12.840135
+Republic of the Congo,1968,kilograms per year per capita,15.5541935
+Republic of the Congo,1969,kilograms per year per capita,14.033423
+Republic of the Congo,1970,kilograms per year per capita,14.18148
+Republic of the Congo,1971,kilograms per year per capita,14.159681
+Republic of the Congo,1972,kilograms per year per capita,14.875195
+Republic of the Congo,1973,kilograms per year per capita,14.56243
+Republic of the Congo,1974,kilograms per year per capita,14.752823
+Republic of the Congo,1975,kilograms per year per capita,15.311051
+Republic of the Congo,1976,kilograms per year per capita,16.053598
+Republic of the Congo,1977,kilograms per year per capita,15.917977
+Republic of the Congo,1978,kilograms per year per capita,16.540503
+Republic of the Congo,1979,kilograms per year per capita,16.393873
+Republic of the Congo,1980,kilograms per year per capita,16.965794
+Republic of the Congo,1981,kilograms per year per capita,16.249542
+Republic of the Congo,1982,kilograms per year per capita,17.249891
+Republic of the Congo,1983,kilograms per year per capita,16.726496
+Republic of the Congo,1984,kilograms per year per capita,16.71101
+Republic of the Congo,1985,kilograms per year per capita,16.671795
+Republic of the Congo,1986,kilograms per year per capita,16.088783
+Republic of the Congo,1987,kilograms per year per capita,16.008022
+Republic of the Congo,1988,kilograms per year per capita,16.220663
+Republic of the Congo,1989,kilograms per year per capita,16.015654
+Republic of the Congo,1990,kilograms per year per capita,31.627708
+Republic of the Congo,1991,kilograms per year per capita,33.22287
+Republic of the Congo,1992,kilograms per year per capita,34.74601
+Republic of the Congo,1993,kilograms per year per capita,33.569298
+Republic of the Congo,1994,kilograms per year per capita,32.0333
+Republic of the Congo,1995,kilograms per year per capita,31.324606
+Republic of the Congo,1996,kilograms per year per capita,33.904617
+Republic of the Congo,1997,kilograms per year per capita,35.44637
+Republic of the Congo,1998,kilograms per year per capita,34.58838
+Republic of the Congo,1999,kilograms per year per capita,35.862087
+Republic of the Congo,2000,kilograms per year per capita,41.992077
+Republic of the Congo,2001,kilograms per year per capita,37.605736
+Republic of the Congo,2002,kilograms per year per capita,37.442196
+Republic of the Congo,2003,kilograms per year per capita,38.93607
+Republic of the Congo,2004,kilograms per year per capita,45.149254
+Republic of the Congo,2005,kilograms per year per capita,30.376743
+Republic of the Congo,2006,kilograms per year per capita,32.402264
+Republic of the Congo,2007,kilograms per year per capita,30.622408
+Republic of the Congo,2008,kilograms per year per capita,31.655464
+Republic of the Congo,2009,kilograms per year per capita,33.472824
+Republic of the Congo,2010,kilograms per year per capita,31.499977
+Republic of the Congo,2011,kilograms per year per capita,29.409983
+Republic of the Congo,2012,kilograms per year per capita,30.989998
+Republic of the Congo,2013,kilograms per year per capita,29.20998
+Republic of the Congo,2014,kilograms per year per capita,28.449972
+Republic of the Congo,2015,kilograms per year per capita,32.06
+Republic of the Congo,2016,kilograms per year per capita,29.289944
+Republic of the Congo,2017,kilograms per year per capita,28.739962
+Republic of the Congo,2018,kilograms per year per capita,28.759995
+Republic of the Congo,2019,kilograms per year per capita,26.79997
+Republic of the Congo,2020,kilograms per year per capita,17.24996
+Republic of the Congo,2021,kilograms per year per capita,15.12999
 Costa Rica,1961,kilograms per year per capita,17.461317
 Costa Rica,1962,kilograms per year per capita,17.671856
 Costa Rica,1963,kilograms per year per capita,17.671453
@@ -2869,18 +2869,18 @@ Czechoslovakia,1989,kilograms per year per capita,86.57184
 Czechoslovakia,1990,kilograms per year per capita,78.029884
 Czechoslovakia,1991,kilograms per year per capita,77.544975
 Czechoslovakia,1992,kilograms per year per capita,60.431602
-Democratic Republic of Congo,2010,kilograms per year per capita,10.2
-Democratic Republic of Congo,2011,kilograms per year per capita,9.93
-Democratic Republic of Congo,2012,kilograms per year per capita,9.619999
-Democratic Republic of Congo,2013,kilograms per year per capita,9.279999
-Democratic Republic of Congo,2014,kilograms per year per capita,9.4
-Democratic Republic of Congo,2015,kilograms per year per capita,9.039999
-Democratic Republic of Congo,2016,kilograms per year per capita,8.52
-Democratic Republic of Congo,2017,kilograms per year per capita,7.89
-Democratic Republic of Congo,2018,kilograms per year per capita,7.99
-Democratic Republic of Congo,2019,kilograms per year per capita,7.8599997
-Democratic Republic of Congo,2020,kilograms per year per capita,7.989999
-Democratic Republic of Congo,2021,kilograms per year per capita,6.99
+Democratic Republic of the Congo,2010,kilograms per year per capita,10.2
+Democratic Republic of the Congo,2011,kilograms per year per capita,9.93
+Democratic Republic of the Congo,2012,kilograms per year per capita,9.619999
+Democratic Republic of the Congo,2013,kilograms per year per capita,9.279999
+Democratic Republic of the Congo,2014,kilograms per year per capita,9.4
+Democratic Republic of the Congo,2015,kilograms per year per capita,9.039999
+Democratic Republic of the Congo,2016,kilograms per year per capita,8.52
+Democratic Republic of the Congo,2017,kilograms per year per capita,7.89
+Democratic Republic of the Congo,2018,kilograms per year per capita,7.99
+Democratic Republic of the Congo,2019,kilograms per year per capita,7.8599997
+Democratic Republic of the Congo,2020,kilograms per year per capita,7.989999
+Democratic Republic of the Congo,2021,kilograms per year per capita,6.99
 Denmark,1961,kilograms per year per capita,40.784977
 Denmark,1962,kilograms per year per capita,40.516174
 Denmark,1963,kilograms per year per capita,45.860756
