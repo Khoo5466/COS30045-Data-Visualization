@@ -7,12 +7,10 @@
         <meta name="author"	content="Khoo Chun Pin & Tan Shan Yan"/>
 
         <link rel="stylesheet" href="index.css">
-        
-        <script src="http://d3js.org/d3.v4.js"></script>
-        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
         <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
         <script src="https://d3js.org/d3.v7.min.js"></script>
-        <script src="https://d3js.org/d3.v6.min.js"></script>
 
 
         <title></title>
@@ -25,34 +23,50 @@
                 <a href="worldmap.html">maps</a>
                 <a href="#chart1">Chart1</a>
                 <a href="#chart2">Chart2</a>
+                <a href="#chart3">Chart3</a>
+                <a href="#chart4">Chart4</a>
             </nav>
         </header>
 
-        <h1>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: A Focus on Food Supply and Consumption</h1>
+        <div class="container">
+            <br><br>
+            <h1
+            contenteditable>Impact  of  Unhealthy  Lifestyles  and  Environments  on  Premature  Mortality</h1>
+            <p>A Focus on Food Supply and Consumption</p>
+        </div>
         
         
-<<<<<<< HEAD
         <div class="chart-container">
             <div id="maps-container">
                 <div id="worldmap1"></div>
                 <div id="worldmap2"></div>
-=======
-        <div id="chart-container">
-            <div id="chart1">
-                <div id="country-filter-container">
-                    <label for="countryFilter"><strong>Countries:</strong></label>
-                    <select id="countryFilter" ></select>
-                </div>
-                <div id="year-filter-container">
-                    <label for="yearFilter" id="yearFilter-label"><strong>Years:</strong></label>
-                    <select id="yearFilter" ></select>
-                </div>
-                <script src="visualization/chart1.js"></script>
->>>>>>> 65a1cc43a2d138b9b5aad2a84106771d856daddc
             </div>
             <!-- End of maps-container -->
 
-<<<<<<< HEAD
+            <img src="images/food images.webp" alt="Various food images illustrating global dietary patterns">
+            <br>
+            <p id="p1">
+                This project explores the impact of food supply and consumption on global health, focusing on how poor diets contribute to chronic diseases and premature mortality. It examines food as a non-medical health determinant, highlighting how high-calorie, low-nutrient diets—often due to socioeconomic and 
+                environmental factors—drive non-communicable diseases like heart disease, diabetes, and obesity. By analyzing a dataset on food supply (including nutrients like fats, sugars, and calories) and consumption patterns (such as fruit and vegetable intake), the project aims to uncover links between dietary
+                 trends and health outcomes. <br><br>The project objectives include analyzing food supply trends to understand the availability of essential nutrients and how socioeconomic factors influence access to nutritious foods. It also examines dietary consumption patterns to identify shifts towards processed and unhealthy 
+                 foods, particularly in low-income and urban settings, where access to fresh, nutritious options may be limited. Additionally, the project explores broader socioeconomic and environmental factors, including income, food security, and cultural preferences, that shape eating habits and create barriers to healthy diets, especially 
+                 in marginalized communities. <br><br>By correlating dietary patterns with health outcomes, the project clarifies how poor diets contribute to chronic diseases. This analysis offers insights into the direct and indirect pathways by which food supply and consumption impact public health, underscoring the need for policy changes to enhance access to healthy foods. Ultimately, the project seeks to offer actionable policy recommendations and promote global health equity, emphasizing the importance of sustainable food systems, public health education, and multi-sectoral interventions. Through this approach, the project aims to support data-driven strategies to reduce preventable diseases and promote healthier, more sustainable lifestyles globally.
+
+
+
+
+
+
+
+
+
+
+
+            </p>
+
+            <br><br><br><br><br>
+            <h2><strong>Rising Calorie and Sugar Supplies: A Growing Concern for Public Health and Premature Mortality</strong></h2>
+
             <div id="chart1-container">
                 <div id="chart1">
                     <div id="chart1-country-filter-container">
@@ -64,20 +78,23 @@
                         <select id="chart1-yearFilter" ></select>
                     </div>
                 </div>
-    
-                <article id="chart1-article">
-                    <strong>Article:</strong><br>
-                    Hello, this is a sample article content that will be displayed beside the chart. You can add more information or descriptions here.
-                </article>
+                <div id="box-c1"><p id="p2">
+                    The bar chart illustrates trends in food supply types from 2010 to 2021, highlighting calorie, fat, sugar, vegetable, fruit, and protein availability. 
+                        Over the years, calorie, fat, and sugar supplies remained consistently high, reflecting the global shift towards energy-dense, nutrient-poor diets. 
+                        This trend is concerning, as excessive consumption of high-calorie and sugary foods is closely linked to obesity, heart disease, and diabetes. 
+                        Meanwhile, the relatively stable supply of vegetables and fruits suggests limited improvements in the availability of healthier options. 
+                        To combat rising rates of lifestyle-related diseases and premature mortality,
+                        there is a pressing need for initiatives that promote balanced diets and reduce reliance on processed, calorie-rich foods.</p>
+                
+                </p></div>
+                
             </div>
             <!-- End of chart1-container -->
+            <h2><strong>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: The Global Challenge of Food Supply and Nutrition</strong></h2>
 
             <div id="chart2-container">
-                <article id="chart2-article">
-                    <strong>Article:</strong><br>
-                    This article provides insights on daily protein supply trends from plant and animal sources.
-                </article>
-                <div id="chart2">
+            
+                <div id="chart2"><br><br>
                     <div id="chart2-country-filter-container">
                         <label for="chart2-countryFilter"><strong>Countries:</strong></label>
                         <select id="chart2-countryFilter" ></select>
@@ -93,53 +110,77 @@
                         <span id="yearEnd"></span>
                     </div>
                 </div>
+                <div id="box-c2"><p id="p2">
+                    The line chart illustrates the daily supply of animal and plant protein from 1961 to 2021, highlighting significant trends that may correlate with lifestyle and health outcomes. 
+                        Over this period, plant protein supply fluctuates but generally declines, especially from the late 1980s to early 2000s, while animal protein supply remains consistently low, 
+                        peaking only slightly in the early 1980s. Limited access to both protein sources—particularly plant-based proteins, which are often the primary source of essential nutrients in 
+                        low-income regions—reflects a nutritional gap that could impact long-term health. Low protein intake is often associated with weakened immunity, stunted growth, 
+                        and other health risks that can contribute to premature mortality. The trend suggests that a combination of poor food supply and possibly environmental factors may be leading to nutrient deficiencies,
+                        which are crucial elements of an unhealthy lifestyle. Addressing these gaps in dietary intake could be an essential step toward reducing premature mortality rates and similar regions.
+               
+                </p></div>
+
             </div>
             <!-- End of chart2-container -->
 
-            <div id="chart3-container">
-                <div id="chart3"></div>
-            </div>
-            <!-- End of chart3-container -->
-            
-            <div id="chart4-container">
-                <div id="chart4"></div>
-            </div>
-            <!-- End of chart4-container -->
+            <br><br><br> <br><br><br>
+                <div id="chart3"><br><br>
+                    <script src="visualization/chart3.js"></script>
+                    <h2><strong>Food Consumption Score (FCS) Distribution by Country and Year</strong></h2>
+                    <p id="p1">
+                        The zoomable sunburst chart visualizes the Food Consumption Score (FCS) across different years according to the countries, representing three distinct categories of food security levels:
+                        Poor, Borderline, and Acceptable. There are a total of 38 countries selected covering the years between 2006 to 2015. Each inenr arc represent a country such as Sudan, Chad, Nepal etc, showing the 
+                        aggregate food consumption data available for that nation. Inside each country segment consists of arcs represent specific years of collected data, providing insight into food security trends within specific year.</p>
+                        <dt><b>FCS Poor</b></dt>
+                        <dd id="p1"><i>represents households with low food consumption scores, indicating severe food insecurity, making them vulnerable to malnutrition and related health risks.</i></dd>
+                        <dt><b>FCS Borderline</b></dt>
+                        <dd id="p1"><i>represents households with moderate consumption scores, suggesting marginal food security due to lack of consistency and variety in terms of diets, making them at risk of slipping into food insecurity if conditions worsen.</i></dd>
+                        <dt><b>FCS Acceptable</b></dt>
+                        <dd id="p1"><i>represent households with high food consumption scores, indicating adequate food security. They are considered food-secure and less vulnerable to food-relateed crises.</i></dd>
+                        <br>
+                        <p id="p1">The segment size of this zoomable sunburst chart indicate the proportion of each FCS category within a country based on year. Larger segments represent higher value for each FCS category, helping us to identify countries of which existing years has the highest percentage of food insecurity or adequacy.</p>
+                </div>
+                <div id="chart4"></div><br><br>
+                <h2><strong>Exploring Child's Health Indicators Across Global Countries and Years</strong></h2>
+        </div>
+                <img id="img1" src="images/child growth.png" alt="Child growth and malnutrition">
 
+                <h2></h2>
+                <div id="box-c3">
+                    <p id="p2">
+                        The interactive zoomable circle packing visualization provides detailed look at malnutrition indicators across the global countries over a span of 24 years starting from year 2000 until year 2023.
+                        The outer circle represent the whole accessible data collected, containing circles within circles following the order by countries, years then health indicators.The magnutude of the indicator is reflected
+                        by the size of the circles. By zooming in, you can explore layers of information, from broader national and yearly trends to granular indicator details. In this data visualization, there are total of 5 health indicators
+                        which are:
+                        <dt><b>Severe Wasting</b></dt>
+                        <dd id="p2"><i>Children under five with weight that is significantly low for their height, indicating acute malnutrition and is a critical indicator of immediate risk of mortality.</i></dd>
+                        <dt><b>Wasting</b></dt>
+                        <dd id="p2"><i>Children under five with a low weight-for-height ratio, signifying acute malnutrition, possibly causes by food shortages or diseases.</i></dd>
+                        <dt><b>Overweight</b></dt>
+                        <dd id="p2"><i>Children under five with above the weight-for-height norm, indicating overnutrition which could lead to health complications such as diabetes and cardiovascular disease.</i></dd>
+                        <dt><b>Stunting</b></dt>
+                        <dd id="p2"><i>Children under five with low height-for-age, indicating chronic malnutrition. It occurs over a long period and reflects insufficient nutrition which could lead to long-term cognitive and physical issues.</i></dd>
+                        <dt><b>Underweight</b></dt>
+                        <dd id="p2"><i>Children under five who have a low weight-for-age, containing both wasting and stunting, a broader measure that captures both acute and chronic malnutrtion.</i></dd>
+   <br>
+                        <div class="zoom-link-container">
+                            <p class="zoom-text">Click the link below to access our Zoomable Circle Packing</p>
+                            <a href="index2.html" class="zoom-link">-- Zoomable Circle Packing --</a>
+                        </div>
+
+                    </p>
+
+                </div>
+                
+            <!-- End of chart4-container -->
+                
             <script src="food_supply&consumption.js"></script>
         </div>
         <!-- End of chart-container -->
 
-        
-=======
-            <article>
-                <strong>Article:</strong><br>
-                Hello, this is a sample article content that will be displayed beside the chart. You can add more information or descriptions here.
-            </article>
-        </div>
-        <br><br>
-        <div>
-            <p id="chart2"></p>
-        </div>
-
-        <br><br>
-
-
-        <h1>Child Growth and Malnutrition - Zoomable Circle Packing</h1>
-        <svg id="chart3"></svg>
-        <script src="visualization/chart3.js"></script>
-
-        <br><br>
-    
-
-        <h1>Food Consumption Score - Sunburst Pie Chart</h1>
-        <div id="chart4"></div>
-        <script src="visualization/chart4.js"></script>
-    
-    
->>>>>>> 65a1cc43a2d138b9b5aad2a84106771d856daddc
-
-
+        <br><br><br> <br><br><br> <br><br><br> <br><br><br><br><br><br><br><br><br><br>
+        <br><br><br> <br><br><br><br><br><br><br><br><br><br>        <br><br><br> <br><br><br><br><br><br><br><br><br><br>
+        <br><br><br> <br><br><br><br><br><br><br><br><br><br>
 
 
         <footer style="color: grey;">

@@ -1,175 +1,177 @@
-// Tooltip setup using the new .tooltip3 class
-const tooltip = d3.select("body").append("div")
-  .attr("class", "tooltip3")
-  .style("position", "absolute")
-  .style("opacity", 0); // Initial opacity set to 0
+d3.csv("csv/dbo-foodconsumptionscores(modified).csv").then(function(data) {
+  // Initialize a nested map to hold the summed values
+  const nestedData = {};
 
-// Load the CSV file
-d3.csv("csv/child growth and malnutrition.csv").then(data => {
-  const nestedData = {
-    name: "Health Data",
-    children: []
-  };
+  // Iterate over the rows of the CSV
+  data.forEach(function(d) {
+      // Parse the values to ensure they are numbers
+      const country = d.ADM0_NAME;
+      const year = d.FCS_Year;
+      const poor = parseFloat(d.FCS_poor) || 0;
+      const borderline = parseFloat(d.FCS_Borderline) || 0;
+      const acceptable = parseFloat(d.FCS_Acceptable) || 0;
 
-  // Group data by Country
-  const countries = d3.groups(data, d => d["Country Short Name"]);
-  countries.forEach(([country, countryData]) => {
-    const countryEntry = {
-      name: country,
-      children: []
-    };
+      // Initialize nested structure if it doesn't exist
+      if (!nestedData[country]) {
+          nestedData[country] = {};
+      }
+      if (!nestedData[country][year]) {
+          nestedData[country][year] = { FCS_poor: 0, FCS_Borderline: 0, FCS_Acceptable: 0 };
+      }
 
-    // Group data by Year within each Country
-    const years = d3.groups(countryData, d => d["Year"]);
-    years.forEach(([year, yearData]) => {
-      const yearSums = yearData.reduce((acc, curr) => {
-        acc["Severe wasting"] += parseFloat(curr["Severe wasting"]) || 0;
-        acc["Wasting"] += parseFloat(curr["Wasting"]) || 0;
-        acc["Overweight"] += parseFloat(curr["Overweight"]) || 0;
-        acc["Stunting"] += parseFloat(curr["Stunting"]) || 0;
-        acc["Underweight"] += parseFloat(curr["Underweight"]) || 0;
-        return acc;
-      }, { "Severe wasting": 0, "Wasting": 0, "Overweight": 0, "Stunting": 0, "Underweight": 0 });
-
-      const yearEntry = {
-        name: year,
-        children: [
-          { name: "Severe wasting", value: yearSums["Severe wasting"] },
-          { name: "Wasting", value: yearSums["Wasting"] },
-          { name: "Overweight", value: yearSums["Overweight"] },
-          { name: "Stunting", value: yearSums["Stunting"] },
-          { name: "Underweight", value: yearSums["Underweight"] }
-        ]
-      };
-      countryEntry.children.push(yearEntry);
-    });
-
-    nestedData.children.push(countryEntry);
+      // Sum the values for each health indicator by country and year
+      nestedData[country][year].FCS_poor += poor;
+      nestedData[country][year].FCS_Borderline += borderline;
+      nestedData[country][year].FCS_Acceptable += acceptable;
   });
 
-  const width = 932;
-  const height = width;
-  const color = d3.scaleLinear().domain([0, 5]).range(["#d3d3d3", "#69b3a2"]);
+  // Convert the nested data into a structure suitable for the sunburst chart
+  let sunburstData = [];
+  for (const country in nestedData) {
+      const countryNode = {
+          name: country,
+          children: []
+      };
 
-  // Pack the data
-  const pack = data => d3.pack()
-    .size([width - 2, height - 2])
-    .padding(3)(d3.hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value));
+      for (const year in nestedData[country]) {
+          const yearNode = {
+              name: `${year}`,
+              children: [
+                  { name: "FCS poor", value: nestedData[country][year].FCS_poor },
+                  { name: "FCS Borderline", value: nestedData[country][year].FCS_Borderline },
+                  { name: "FCS Acceptable", value: nestedData[country][year].FCS_Acceptable }
+              ]
+          };
 
-  const root = pack(nestedData);
-  const svg = d3.create("svg")
-    .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)  // Default without zoom
-    .style("display", "block")
-    .style("background", "rgb(173, 216, 230)")
-    .style("cursor", "pointer")
-    .on("click", () => zoom(root));
+          countryNode.children.push(yearNode);
+      }
 
-  // Apply the initial zoom-out by adjusting the viewBox
-  function zoomTo(v) {
-    const k = width / v[2];
-    view = v;
-
-    const scaleFactor = 0.8;  // Apply zoom-out factor
-
-    label.attr("transform", d => `translate(${(d.x - v[0]) * k * scaleFactor},${(d.y - v[1]) * k * scaleFactor})`);
-    node.attr("transform", d => `translate(${(d.x - v[0]) * k * scaleFactor},${(d.y - v[1]) * k * scaleFactor})`);
-    node.attr("r", d => d.r * k * scaleFactor);
+      sunburstData.push(countryNode);
   }
 
-  let focus = root;
-  let view;
+  // Create the sunburst chart
+  const width = 928;
+  const height = width;
+  const radius = width / 12;
 
-  // Create the circles and labels for each node
-  const node = svg.append("g")
-    .selectAll("circle")
-    .data(root.descendants().slice(1)) // Skip the root node
-    .join("circle")
-    .attr("fill", d => d.children ? color(d.depth) : "white")
-    .attr("pointer-events", d => !d.children ? "none" : null)
-    .on("mouseover", function(event, d) {
-      d3.select(this).attr("stroke", "#000");
-      tooltip.transition().duration(200).style("opacity", .9);
+  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, sunburstData.length + 1));
 
-      let tooltipText = "";
-      if (d.depth === 1) {
-        // Country level
-        tooltipText = `<strong>Country:</strong> ${d.data.name}`;
-      } else if (d.depth === 2) {
-        // Year level
-        tooltipText = `<strong>Year:</strong> ${d.data.name}<br><strong>Country:</strong> ${d.parent.data.name}`;
-      } else if (d.depth === 3) {
-        // Health indicator level
-        tooltipText = `<strong>Indicator:</strong> ${d.data.name}<br><strong>Value:</strong> ${d.value}<br><strong>Country:</strong> ${d.parent.parent.data.name}<br><strong>Year:</strong> ${d.parent.data.name}`;
-      }
-      tooltip.html(tooltipText)
-             .style("left", (event.pageX + 10) + "px")
-             .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mouseout", function() {
-      d3.select(this).attr("stroke", null);
-      tooltip.transition().duration(500).style("opacity", 0);
-    })
-    .on("click", (event, d) => focus !== d && (zoom(d), event.stopPropagation()));
+  const hierarchy = d3.hierarchy({ name: "root", children: sunburstData })
+      .sum(d => d.value)
+      .sort((a, b) => b.value - a.value);
+
+  const root = d3.partition()
+      .size([2 * Math.PI, hierarchy.height + 1])
+      (hierarchy);
+
+  root.each(d => d.current = d);
+
+  const arc = d3.arc()
+      .startAngle(d => d.x0)
+      .endAngle(d => d.x1)
+      .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+      .padRadius(radius * 1.5)
+      .innerRadius(d => d.y0 * radius)
+      .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+
+  const svg = d3.create("svg")
+  .attr("viewBox", [-width / 2, -height / 3, width , height ])  // Adjust viewBox to fit better
+  .style("font", "10px sans-serif");
+
+  // Append the arcs
+  const path = svg.append("g")
+      .selectAll("path")
+      .data(root.descendants().slice(1))
+      .join("path")
+      .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+      .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
+      .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
+      .attr("d", d => arc(d.current));
+
+  // Make them clickable if they have children
+  path.filter(d => d.children)
+      .style("cursor", "pointer")
+      .on("click", clicked);
+
+  const format = d3.format(",d");
+  path.append("title")
+      .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
 
   const label = svg.append("g")
-    .style("font", "12px sans-serif")
-    .attr("pointer-events", "none")
-    .attr("text-anchor", "middle")
-    .selectAll("text")
-    .data(root.descendants())
-    .join("text")
-    .style("fill-opacity", d => d.parent === root ? 1 : 0)
-    .style("display", d => d.parent === root ? "inline" : "none")
-    .text(d => d.depth === 3 ? `${d.data.name}: ${d.value.toFixed(2)}` : d.data.name);  // Label health indicators with sum value
+      .attr("pointer-events", "none")
+      .attr("text-anchor", "middle")
+      .style("user-select", "none")
+      .selectAll("text")
+      .data(root.descendants().slice(1))
+      .join("text")
+      .attr("dy", "0.35em")
+      .attr("fill-opacity", d => +labelVisible(d.current))
+      .attr("transform", d => labelTransform(d.current))
+      .text(d => d.data.name)
+      .style("font-size", "8px");
 
-  function zoom(d) {
-    focus = d;
-    const transition = svg.transition()
-      .duration(750)
-      .tween("zoom", d => {
-        const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
-        return t => zoomTo(i(t));
-      });
 
-    label
-      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-      .transition(transition)
-      .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-      .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-      .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+  const parent = svg.append("circle")
+      .datum(root)
+      .attr("r", radius)
+      .attr("fill", "none")
+      .attr("pointer-events", "all")
+      .on("click", clicked);
+
+  // Append the SVG to the chart container in the HTML
+  const chartContainer = document.getElementById("chart3");
+  if (chartContainer) {
+      chartContainer.appendChild(svg.node());
+  } else {
+      console.error("No chart4 container found.");
   }
 
-  // Handle mouse scroll zooming inside the viewBox container
-  svg.on("wheel", function(event) {
-    event.preventDefault(); // Prevent default scroll behavior
+  // Handle zoom on click
+  function clicked(event, p) {
+      parent.datum(p.parent || root);
 
-    const scaleFactor = 1.1; // Adjust the zoom sensitivity
-    const zoomDirection = event.deltaY > 0 ? 1 : -1; // Reverse the zoom direction (scroll up to zoom in)
+      root.each(d => d.target = {
+          x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+          x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+          y0: Math.max(0, d.y0 - p.depth),
+          y1: Math.max(0, d.y1 - p.depth)
+      });
 
-    // Get mouse position relative to the SVG
-    const [mouseX, mouseY] = d3.pointer(event);
+      const t = svg.transition().duration(750);
 
-    const zoomScale = zoomDirection > 0 ? scaleFactor : 1 / scaleFactor;
+      path.transition(t)
+          .tween("data", d => {
+              const i = d3.interpolate(d.current, d.target);
+              return t => d.current = i(t);
+          })
+          .filter(function(d) {
+              return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+          })
+          .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+          .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
+          .attrTween("d", d => () => arc(d.current));
 
-    // Get the current viewBox values
-    const currentViewBox = svg.attr("viewBox").split(" ");
-    const currentX = parseFloat(currentViewBox[0]);
-    const currentY = parseFloat(currentViewBox[1]);
-    const currentWidth = parseFloat(currentViewBox[2]);
-    const currentHeight = parseFloat(currentViewBox[3]);
+      label.filter(function(d) {
+          return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+      }).transition(t)
+          .attr("fill-opacity", d => +labelVisible(d.target))
+          .attrTween("transform", d => () => labelTransform(d.current));
+  }
 
-    const newWidth = currentWidth * zoomScale;
-    const newHeight = currentHeight * zoomScale;
-    const newX = currentX + (currentWidth - newWidth) * (mouseX / currentWidth);
-    const newY = currentY + (currentHeight - newHeight) * (mouseY / currentHeight);
+  function arcVisible(d) {
+      return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+  }
 
-    // Update the viewBox with the new zoomed scale and position
-    svg.attr("viewBox", `${newX} ${newY} ${newWidth} ${newHeight}`);
-  });
+  function labelVisible(d) {
+      return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+  }
 
-  // Apply the initial zoom state
-  zoomTo([root.x, root.y, root.r * 2]);
+  function labelTransform(d) {
+      const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+      const y = (d.y0 + d.y1) / 2 * radius;
+      return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+  }
 
-  // Add SVG to the body
-  document.body.append(svg.node());
+}).catch(function(error) {
+  console.error("Error loading data: ", error);
 });
