@@ -328,7 +328,7 @@ function supply1(){
         updateChart(allData);
     });
 
-    // Function to populate filters with "All Selected" option
+    // Function to populate filters with "All Countries" option
     function populateFilters(data) {
         const countries = ["All Countries", ...new Set(data.map(d => d.Reference_area))];
         const years = ["2010 to 2021", ...new Set(data.map(d => d.TIME_PERIOD))];
@@ -363,7 +363,7 @@ function supply1(){
         );
 
         const filteredData = allData.filter(d =>
-            (selectedCountry === "All Selected" || d.Reference_area === selectedCountry) &&
+            (selectedCountry === "All Countries" || d.Reference_area === selectedCountry) &&
             (selectedYears.includes("2010 to 2021") || selectedYears.includes(d.TIME_PERIOD))
         );
 
@@ -428,7 +428,7 @@ function supply1(){
             .attr("text-anchor", "middle")
             .attr("font-size", "16px")
             .attr("font-weight", "bold")
-            .text(`Food Supply in Country: ${selectedCountry}, Year: ${selectedYears}`);
+            .text(`Food Supply Type in Country: ${selectedCountry}, Year: ${selectedYears}`);
 
         // Draw grouped bars
         const barWidth = xScale.bandwidth() / colorScale.domain().length; // Width of each bar segment
@@ -444,9 +444,9 @@ function supply1(){
             .attr("height", d => chartHeight - padding - yScale(d.calories))
             .attr("fill", d => colorScale(d.year))
             .on("mouseover", function(event, d) {
-                // Check if the selected country is "All Selected"
+                // Check if the selected country is "All Countries"
                 const selectedCountry = d3.select("#chart1-countryFilter").property("value");
-                const displayCountry = selectedCountry === "All Selected" ? "All Selected" : d.country;
+                const displayCountry = selectedCountry === "All Countries" ? "All Countries" : d.country;
                 // Show tooltip on mouseover
                 tooltip
                     .style("display", "block")
@@ -477,7 +477,7 @@ function supply1(){
             .attr("text-anchor", "middle")
             .attr("font-size", "14px")
             .attr("font-weight", "bold")
-            .text("Food Supply Measure");
+            .text("Food Supply Type");
 
         // Add y-axis with title
         var yAxis = d3.axisLeft(yScale).tickFormat(d => `${d} kcal`);
@@ -643,14 +643,30 @@ function supply2(){
             svg = d3.select("#chart2")
                     .append("svg")
                     .attr("width", svgWidth)
-                    .attr("height", svgHeight);
+                    .attr("height", svgHeight)
+                    .attr("font-weight", "bold");
         } else {
             svg.selectAll("*").remove();
         }
 
+        const tooltip = d3.select("body")  // Or "#chart2" if you're appending it inside the chart div
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("position", "absolute")
+                        .style("padding", "6px")
+                        .style("background-color", "rgba(0, 0, 0, 0.7)")
+                        .style("color", "#fff")
+                        .style("border-radius", "4px")
+                        .style("pointer-events", "none")
+                        .style("display", "none"); // Initially hidden
+
         // Chart title (dynamically set based on selected country and year range)
         const selectedCountry = d3.select("#chart2-countryFilter").property("value");
-        const selectedYears = `${d3.select("#chart2-minyearSlider").property("value")} - ${d3.select("#chart2-maxyearSlider").property("value")}`;
+        const selectedMinYear = d3.select("#chart2-minyearSlider").property("value");
+        const selectedMaxYear = d3.select("#chart2-maxyearSlider").property("value");
+
+        // Check if the selected min and max years are the same
+        const selectedYears = (selectedMinYear === selectedMaxYear) ? `${selectedMinYear}` : `${selectedMinYear} - ${selectedMaxYear}`;
 
         svg.append("text")
             .attr("x", lineWidth / 2)
@@ -670,8 +686,6 @@ function supply2(){
 
             const barHeight = 30;
             const barSpacing = 40;
-
-            // Set scales
             const xScale = d3.scaleLinear()
                             .domain([0, d3.max(filteredData, d => Math.max(d.animal_protein, d.plant_protein))])
                             .range([padding, svgWidth - padding]);
@@ -687,44 +701,69 @@ function supply2(){
 
             const formatValue = d3.format(".2f");
 
-            // Append bars for each year
+            // Add bars for Animal Protein
             svg.append("g")
-                .attr("fill", colorScale("Animal Protein"))
-                .selectAll("rect")
-                .data(filteredData)
-                .join("rect")
-                .attr("x", padding)
-                .attr("y", d => yScale("Animal Protein")  - barHeight / 2 + 50)
-                .attr("width", d => xScale(d.animal_protein) - padding)
-                .attr("height", barHeight);
+            .selectAll("rect.animal-bar")
+            .data(filteredData)
+            .join("rect")
+            .attr("class", "animal-bar")
+            .attr("x", padding)
+            .attr("y", d => yScale("Animal Protein") - barHeight / 2 + 50)
+            .attr("width", d => xScale(d.animal_protein) - padding)
+            .attr("height", barHeight)
+            .attr("fill", colorScale("Animal Protein"))
+            .on("mouseover", function(event, d) {
+                const selectedCountry = d3.select("#chart2-countryFilter").property("value");
+                tooltip.style("display", "block")
+                        .html(`Year: ${d.year}<br>Country: ${selectedCountry}<br><hr>Animal Protein: ${formatValue(d.animal_protein)} g`)
+                        .style("left", `${event.pageX + 15}px`)
+                        .style("top", `${event.pageY - 30}px`);
+            })
+            .on("mouseout", function() {
+                tooltip.style("display", "none");
+            });
 
+            // Add labels for Animal Protein bars
             svg.append("g")
-                .attr("fill", colorScale("Animal Protein"))
-                .selectAll("text")
+                .selectAll("text.animal-label")
                 .data(filteredData)
                 .join("text")
+                .attr("class", "animal-label")
                 .attr("x", d => xScale(d.animal_protein) - padding / 2 + 105)
                 .attr("y", d => yScale("Animal Protein") - barHeight / 2 + 48 + barHeight / 2)
                 .attr("dy", ".35em")
                 .attr("text-anchor", "end")
                 .text(d => formatValue(d.animal_protein) + " g");
 
+            // Add bars for Plant Protein
             svg.append("g")
-                .attr("fill", colorScale("Plant Protein"))
-                .selectAll("rect")
+                .selectAll("rect.plant-bar")
                 .data(filteredData)
                 .join("rect")
+                .attr("class", "plant-bar")
                 .attr("x", padding)
                 .attr("y", d => yScale("Plant Protein") - barHeight / 2 + 50)
                 .attr("width", d => xScale(d.plant_protein) - padding)
-                .attr("height", barHeight);
-            
-            svg.append("g")
+                .attr("height", barHeight)
                 .attr("fill", colorScale("Plant Protein"))
-                .selectAll("text")
+                .on("mouseover", function(event, d) {
+                    const selectedCountry = d3.select("#chart2-countryFilter").property("value");
+                    tooltip.style("display", "block")
+                              .html(`Year: ${d.year}<br>Country: ${selectedCountry}<br><hr>Plant Protein: ${formatValue(d.plant_protein)} g`)
+                              .style("left", `${event.pageX + 15}px`)
+                              .style("top", `${event.pageY - 30}px`);
+                })
+                .on("mouseout", function() {
+                    tooltip.style("display", "none");
+                });
+        
+            // Add labels for Plant Protein bars
+            svg.append("g")
+                .selectAll("text.plant-label")
                 .data(filteredData)
                 .join("text")
-                .attr("x", d => xScale(d.plant_protein) - padding /2 + 105)
+                .attr("class", "plant-label")
+                .attr("x", d => xScale(d.plant_protein) - padding / 2 + 105)
                 .attr("y", d => yScale("Plant Protein") - barHeight / 2 + 48 + barHeight / 2)
                 .attr("dy", ".35em")
                 .attr("text-anchor", "end")
@@ -756,6 +795,7 @@ function supply2(){
                     .attr("dy", ".35em")
                     .text(d => d);
         } else {
+            
             svg.append("path")
                 .datum(groupedData)
                 .attr("fill", "none")
@@ -775,6 +815,86 @@ function supply2(){
                                 .x(d => xScale(d.year))
                                 .y(d => yScale(d.plant_protein))
                 );
+
+            // Define the vertical line (initially hidden)
+            const verticalLine = svg.append("line")
+                                    .attr("class", "vertical-line")
+                                    .attr("stroke", "grey")
+                                    .attr("stroke-width", 1.5)
+                                    .style("visibility", "hidden");
+
+            // Create pointers for each data point for animal protein
+            const animalPointers = svg.selectAll(".animal-pointer")
+                                    .data(groupedData)
+                                    .enter()
+                                    .append("circle")
+                                    .attr("class", "animal-pointer")
+                                    .attr("cx", d => xScale(d.year))
+                                    .attr("cy", d => yScale(d.animal_protein))
+                                    .attr("r", 2)  // Initial size
+                                    .attr("fill", colorScale("Animal Protein"));
+
+            // Create pointers for each data point for plant protein
+            const plantPointers = svg.selectAll(".plant-pointer")
+                                    .data(groupedData)
+                                    .enter()
+                                    .append("circle")
+                                    .attr("class", "plant-pointer")
+                                    .attr("cx", d => xScale(d.year))
+                                    .attr("cy", d => yScale(d.plant_protein))
+                                    .attr("r", 2)  // Initial size
+                                    .attr("fill", colorScale("Plant Protein"));
+
+            // Define the transparent overlay rectangle for capturing mouse events
+            svg.append("rect")
+            .attr("class", "overlay")
+            .attr("width", lineWidth - padding * 2)
+            .attr("height", lineHeight - padding)
+            .attr("x", padding)
+            .attr("y", padding)
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .on("mousemove", function(event) {
+                const [mouseX] = d3.pointer(event, this);
+                const year = Math.round(xScale.invert(mouseX));
+                const i = d3.bisector(d => d.year).center(groupedData, year);
+
+                if (i >= 0 && i < groupedData.length) {
+                    const d = groupedData[i];
+
+                    // Update the vertical line position
+                    verticalLine
+                        .attr("x1", xScale(d.year))
+                        .attr("x2", xScale(d.year))
+                        .attr("y1", padding)
+                        .attr("y2", yScale(0))
+                        .style("visibility", "visible");
+
+                    const selectedCountry = d3.select("#chart2-countryFilter").property("value");
+                    // Display and position the tooltip
+                    tooltip
+                        .html(`Year: ${d.year}<br>Country: ${selectedCountry}<br><hr>Animal Protein: ${d3.format(".2f")(d.animal_protein)} g<br>Plant Protein: ${d3.format(".2f")(d.plant_protein)} g`)
+                        .style("left", `${event.pageX + 15}px`)
+                        .style("top", `${event.pageY - 30}px`)
+                        .style("display", "block");
+
+                    // Highlight the points by increasing their radius
+                    animalPointers.attr("r", p => (p.year === d.year ? 4 : 2));
+                    plantPointers.attr("r", p => (p.year === d.year ? 4 : 2));
+                }
+            })
+            .on("mouseover", function() {
+                // Show the vertical line and tooltip on mouseover
+                verticalLine.style("visibility", "visible");
+                tooltip.style("display", "block");
+            })
+            .on("mouseout", function() {
+                // Hide the vertical line and tooltip when the mouse leaves the overlay
+                verticalLine.style("visibility", "hidden");
+                tooltip.style("display", "none");
+                animalPointers.attr("r", 2);
+                plantPointers.attr("r", 2);
+            });
 
             var xAxis = d3.axisBottom(xScale)
                             .tickFormat(d3.format("d"))
@@ -796,10 +916,12 @@ function supply2(){
                 .attr("font-weight", "bold")
                 .text("Year");
 
-            var yAxis = d3.axisLeft(yScale).tickFormat(d => `${d} g`);
+            var yAxis = d3.axisLeft(yScale).tickFormat(d => `${d} g`).tickSize(-lineWidth + padding * 2);
             svg.append("g")
                 .attr("transform", "translate(" + padding + ",0)")
-                .call(yAxis);
+                .call(yAxis)
+                .call(g => g.select(".domain").attr("display", "none"))
+                .call(g => g.selectAll(".tick line").attr("stroke", "gray").attr("stroke-dasharray", "2,2"));
 
             svg.append("text")
                 .attr("class", "y axis-label")

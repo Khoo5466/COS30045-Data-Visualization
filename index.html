@@ -20,16 +20,16 @@
         <header>
             <nav>
                 <a href="index.html">Home</a>
-                <a href="worldmap.html">maps</a>
-                <a href="#chart1">Chart1</a>
-                <a href="#chart2">Chart2</a>
-                <a href="#chart3">Chart3</a>
-                <a href="#chart4">Chart4</a>
+                <a href="worldmap.html">Fruit & Vegetables Consumption</a>
+                <a href="#chart1">Multi Food Supply</a>
+                <a href="#chart2">Daily Protein Supply</a>
+                <a href="#chart3">Food Consumption Score</a>
+                <a href="#chart4">Child Growth</a>
             </nav>
         </header>
 
         <div class="container">
-            <br><br>
+            <br><br><br><br>
             <h1
             contenteditable>Impact  of  Unhealthy  Lifestyles  and  Environments  on  Premature  Mortality</h1>
             <p>A Focus on Food Supply and Consumption</p>
@@ -39,7 +39,7 @@
         <div class="chart-container">
             <img src="images/food images.webp" alt="Various food images illustrating global dietary patterns">
             <br>
-            <p id="p1">
+            <p id="p2">
                 This project explores the impact of food supply and consumption on global health, focusing on how poor diets contribute to chronic diseases and premature mortality. It examines food as a non-medical health determinant, highlighting how high-calorie, low-nutrient diets—often due to socioeconomic and 
                 environmental factors—drive non-communicable diseases like heart disease, diabetes, and obesity. By analyzing a dataset on food supply (including nutrients like fats, sugars, and calories) and consumption patterns (such as fruit and vegetable intake), the project aims to uncover links between dietary
                  trends and health outcomes. <br><br>The project objectives include analyzing food supply trends to understand the availability of essential nutrients and how socioeconomic factors influence access to nutritious foods. It also examines dietary consumption patterns to identify shifts towards processed and unhealthy 
@@ -59,7 +59,7 @@
             </p>
 
             <br><br><br><br>
-            <h2><strong>Rising Calorie and Sugar Supplies: A Growing Concern for Public Health and Premature Mortality</strong></h2>
+            <h2><strong>Calculate of Food Supply with Country in Year</strong></h2>
 
             <div id="chart1-container">
                 <div id="chart1">
@@ -72,7 +72,7 @@
                         <select id="chart1-yearFilter" ></select>
                     </div>
                 </div>
-                <div id="box-c1"><p id="p2">
+                <div id="box-c1"><p id="p1">
                     The bar chart illustrates trends in food supply types from 2010 to 2021, highlighting calorie, fat, sugar, vegetable, fruit, and protein availability. 
                         Over the years, calorie, fat, and sugar supplies remained consistently high, reflecting the global shift towards energy-dense, nutrient-poor diets. 
                         This trend is concerning, as excessive consumption of high-calorie and sugary foods is closely linked to obesity, heart disease, and diabetes. 
@@ -84,7 +84,7 @@
                 
             </div>
             <!-- End of chart1-container -->
-            <h2><strong>Impact of Unhealthy Lifestyles and Environments on Premature Mortality: The Global Challenge of Food Supply and Nutrition</strong></h2>
+            <h2><strong>Daily Protein Supply from Plant and Animal Based Foods by Countries in Year</strong></h2>
 
             <div id="chart2-container">
             
@@ -95,16 +95,16 @@
                     </div>
                     <div id="chart2-year-slider-container" class="slider-container">
                         <span id="yearBegin"></span>
-                        <div class="range-slider">
-                            <div class="range-track"></div>
-                            <div class="range-selected" id="selected-range"></div>
+                        <div id="chart2-range-slider">
+                            <div id="chart2-range-track"></div>
+                            <div id="chart2-range-selected" id="chart2-selected-range"></div>
                             <input type="range" id="chart2-minyearSlider" min="1961" max="2021" step="1" value="1961" />
                             <input type="range" id="chart2-maxyearSlider" min="1961" max="2021" step="1" value="2021" />
                         </div>
                         <span id="yearEnd"></span>
                     </div>
                 </div>
-                <div id="box-c2"><p id="p2">
+                <div id="box-c2"><p id="p1">
                     The line chart illustrates the daily supply of animal and plant protein from 1961 to 2021, highlighting significant trends that may correlate with lifestyle and health outcomes. 
                         Over this period, plant protein supply fluctuates but generally declines, especially from the late 1980s to early 2000s, while animal protein supply remains consistently low, 
                         peaking only slightly in the early 1980s. Limited access to both protein sources—particularly plant-based proteins, which are often the primary source of essential nutrients in 
@@ -121,18 +121,18 @@
                 <div id="chart3"><br><br>
                     <script src="visualization/chart3.js"></script>
                     <h2><strong>Food Consumption Score (FCS) Distribution by Country and Year</strong></h2>
-                    <p id="p1">
+                    <p id="p2">
                         The zoomable sunburst chart visualizes the Food Consumption Score (FCS) across different years according to the countries, representing three distinct categories of food security levels:
                         Poor, Borderline, and Acceptable. There are a total of 38 countries selected covering the years between 2006 to 2015. Each inenr arc represent a country such as Sudan, Chad, Nepal etc, showing the 
                         aggregate food consumption data available for that nation. Inside each country segment consists of arcs represent specific years of collected data, providing insight into food security trends within specific year.</p>
                         <dt><b>FCS Poor</b></dt>
-                        <dd id="p1"><i>represents households with low food consumption scores, indicating severe food insecurity, making them vulnerable to malnutrition and related health risks.</i></dd>
+                        <dd id="p2"><i>represents households with low food consumption scores, indicating severe food insecurity, making them vulnerable to malnutrition and related health risks.</i></dd>
                         <dt><b>FCS Borderline</b></dt>
-                        <dd id="p1"><i>represents households with moderate consumption scores, suggesting marginal food security due to lack of consistency and variety in terms of diets, making them at risk of slipping into food insecurity if conditions worsen.</i></dd>
+                        <dd id="p2"><i>represents households with moderate consumption scores, suggesting marginal food security due to lack of consistency and variety in terms of diets, making them at risk of slipping into food insecurity if conditions worsen.</i></dd>
                         <dt><b>FCS Acceptable</b></dt>
-                        <dd id="p1"><i>represent households with high food consumption scores, indicating adequate food security. They are considered food-secure and less vulnerable to food-relateed crises.</i></dd>
+                        <dd id="p2"><i>represent households with high food consumption scores, indicating adequate food security. They are considered food-secure and less vulnerable to food-relateed crises.</i></dd>
                         <br>
-                        <p id="p1">The segment size of this zoomable sunburst chart indicate the proportion of each FCS category within a country based on year. Larger segments represent higher value for each FCS category, helping us to identify countries of which existing years has the highest percentage of food insecurity or adequacy.</p>
+                        <p id="p2">The segment size of this zoomable sunburst chart indicate the proportion of each FCS category within a country based on year. Larger segments represent higher value for each FCS category, helping us to identify countries of which existing years has the highest percentage of food insecurity or adequacy.</p>
                 </div>
                 <div id="chart4"></div><br><br>
                 <h2><strong>Exploring Child's Health Indicators Across Global Countries and Years</strong></h2>
@@ -140,7 +140,9 @@
                 <img id="img1" src="images/child growth.png" alt="Child growth and malnutrition">
 
                 <h2></h2>
-                <div id="box-c3">
+                <br><br><br><br><br><br><br><br>                <br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br>
+
                     <p id="p2">
                         The interactive zoomable circle packing visualization provides detailed look at malnutrition indicators across the global countries over a span of 24 years starting from year 2000 until year 2023.
                         The outer circle represent the whole accessible data collected, containing circles within circles following the order by countries, years then health indicators.The magnutude of the indicator is reflected
@@ -156,7 +158,7 @@
                         <dd id="p2"><i>Children under five with low height-for-age, indicating chronic malnutrition. It occurs over a long period and reflects insufficient nutrition which could lead to long-term cognitive and physical issues.</i></dd>
                         <dt><b>Underweight</b></dt>
                         <dd id="p2"><i>Children under five who have a low weight-for-age, containing both wasting and stunting, a broader measure that captures both acute and chronic malnutrtion.</i></dd>
-   <br>
+   <br>                 
                         <div class="zoom-link-container">
                             <p class="zoom-text">Click the link below to access our Zoomable Circle Packing</p>
                             <a href="index2.html" class="zoom-link">-- Zoomable Circle Packing --</a>
@@ -164,18 +166,12 @@
 
                     </p>
 
-                </div>
                 
             <!-- End of chart4-container -->
                 
             <script src="food_supply&consumption.js"></script>
         </div>
         <!-- End of chart-container -->
-
-        <br><br><br> <br><br><br> <br><br><br> <br><br><br><br><br><br><br><br><br><br>
-        <br><br><br> <br><br><br><br><br><br><br><br><br><br>        <br><br><br> <br><br><br><br><br><br><br><br><br><br>
-        <br><br><br> <br><br><br><br><br><br><br><br><br><br>
-
 
         <footer style="color: grey;">
             <hr><br><p>&copy; 2024 Data Visualization Project Website by Khoo Chun Pin & Tan Shan Yan</p>

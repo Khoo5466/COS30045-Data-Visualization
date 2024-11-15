@@ -51,7 +51,7 @@ function worldmap1() {
     // Load CSV and JSON data
     Promise.all([ 
         d3.csv("csv/Fruit Consumption by Country.csv"),
-        d3.json("world_maps.json")
+        d3.json("https://raw.githubusercontent.com/Khoo5466/COS30045-Data-Visualization/refs/heads/main/world_maps.json")
     ]).then(function([data, json]) {
         allData = data;
         jsonData = json;
@@ -356,7 +356,7 @@ function worldmap2() {
     // Load CSV and JSON data
     Promise.all([ 
         d3.csv("csv/Vegetables Consumption by Country.csv"),
-        d3.json("world_maps.json")
+        d3.json("https://raw.githubusercontent.com/Khoo5466/COS30045-Data-Visualization/refs/heads/main/world_maps.json")
     ]).then(function([data, json]) {
         allData = data;
         jsonData = json;

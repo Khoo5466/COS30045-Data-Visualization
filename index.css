@@ -108,7 +108,7 @@ img {
 }
 
 #p1{
-    font-size: 1.2em;
+    font-size: 0.9em;
     line-height: 150%;
     text-align: left;
     color: rgb(26, 34, 30);
@@ -116,8 +116,8 @@ img {
 }
 
 #p2 {
-    font-size: 0.9em;
-    line-height: 150%;
+    font-size: 1.2em;
+    line-height: 200%;
     text-align: left;
     color: rgb(26, 34, 30);
     letter-spacing: .1px;
@@ -143,11 +143,53 @@ img {
 }
 
 #chart2-year-slider-container {
-    padding: 5px;
-    border-radius: 5px;
+    top: 1600px;  /* Adjust the top value to move the slider upwards */
+    left: 50%;  /* Center the slider horizontally */
+    z-index: 2;
+}
+
+#chart2-range-slider {
+    position: relative;
+    width: 100%;
+}
+
+#chart2-range-slider input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2.5px;
+    background: transparent;
+    outline: none;
     position: absolute;
-    margin-top: 375px;
-    margin-left: 165px;
+    top: 0;
+
+}
+
+#chart2-range-slider input[type="range"]::-webkit-slider-thumb,
+#chart2-range-slider input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid white;
+    
+}
+
+#chart2-range-track {
+    position: absolute;
+    height: 5px;
+    background-color: #ddd;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+#chart2-range-selected {
+    position: absolute;
+    height: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #worldmap1, #worldmap2{
@@ -165,7 +207,7 @@ img {
 
 /* Adjust the slider container for each map */
 .slider-container {
-    width: 100%;  /* Ensure slider takes full width */
+    width: 50%;  /* Ensure slider takes full width */
     max-width: 800px;  /* Optional max width for better control */
     padding: 10px;
     display: flex;
@@ -174,12 +216,29 @@ img {
     gap: 10px;
 }
 
-/* Slider container to keep everything aligned */
+/* Adjust positioning for the sliders */
+#worldmap1-year-slider-container{
+    position: absolute;
+    top: 750px;  /* Adjust the top value to move the slider upwards */
+    left: 50%;  /* Center the slider horizontally */
+    transform: translateX(-50%); /* Center the slider exactly */
+    z-index: 2;
+}   
+
+#worldmap2-year-slider-container {
+    position: absolute;
+    top: 1350px;  /* Adjust the top value to move the slider upwards */
+    left: 50%;  /* Center the slider horizontally */
+    transform: translateX(-50%); /* Center the slider exactly */
+    z-index: 2;
+}   
+
+/* Style adjustments for the range slider track and thumb */
 .range-slider {
     width: 50%;
-    max-width: 500px;  /* Optional max width for sliders */
     position: relative;
-    padding: 15px 0;    /* Adds padding to avoid overflow */
+    padding: 5px 0;
+    height: 8px;
 }
 
 /* Track styling for the slider */
@@ -226,6 +285,7 @@ input[type="range"]::-moz-range-thumb {
     background: #4CAF50; /* Thumb color */
     position: relative;
     z-index: 3;  /* Ensure it stays above everything else */
+    margin-top: 0px;
 }
 
 /* Optional styles for Firefox to fix the issue of overflow */
@@ -268,7 +328,8 @@ input[type="range"]::-webkit-slider-thumb {
     height: 250px;
     font-size: 22px;
     position: absolute;
-    margin-left: 850px;
+    margin-top: 430px;
+    margin-left: 250px;
 }
 
 #box-c4 {
@@ -279,12 +340,10 @@ input[type="range"]::-webkit-slider-thumb {
 }
 #img1 {
     width: 100%;            /* Ensures the image takes full width of its container */
-    height: auto;           /* Maintains aspect ratio */
     max-width: 800px;       /* Set a max width if you don’t want it to be too large */
-    display: block;         /* Center image when width is set */
-    margin: 0 auto;
     border-radius: 10px;    /* Optional rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for effect */
+    margin-left: 250px;
 }
 
 @media (max-width: 768px) {
